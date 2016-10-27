@@ -21,6 +21,7 @@
 </head>
 <body>
 
+<!-- nav -->
 <nav class="navbar navbar-default navbar-static-top">
     <div class="container-fluid">
         <div class="navbar-header">
@@ -29,7 +30,7 @@
             </a>
         </div>
         <div class="container-fluid">
-            <button type="button" class="btn btn-default navbar-btn navbar-right ">Sign in</button>
+            <button type="button" class="btn btn-default navbar-btn navbar-right" data-toggle="modal" data-target="#signInModal">Sign in</button>
             <ul class="nav navbar-nav">
                 <li role="presentation" class="active"><a href="#">Home</a></li>
             </ul>
@@ -37,14 +38,49 @@
     </div>
 </nav>
 
-
+<!--landing-->
 <div class="bg"></div>
 <div class="jumbotron">
-    <h1>Bootstrap Jumbotron</h1>
-    <p class="lead">+ Parallax Effect using jQuery</p>
+    <h1>Learning happens when</h1>
+    <h2>questions get answers</h2>
+    <p>
+        <button class="btn btn-primary btn-lg btn-space">Learn More</button>
+    </p>
 </div>
 
+<!--Sign in-->
+<!-- Modal -->
+<div id="signInModal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-sm">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Sign In</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-inline">
+                    <div class="form-group ">
+                        <label class="sr-only" for="exampleInputEmail3">Email address</label>
+                        <input type="email" class="form-control" id="exampleInputEmail3" placeholder="Enter email">
+                    </div>
+                    <div class="form-group">
+                        <label class="sr-only" for="exampleInputPassword3">Password</label>
+                        <input type="password" class="form-control" id="exampleInputPassword3" placeholder="Password">
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary">Sign In</button>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
 
+                <a href="#" class="btn-link pull-left">Need an account?</a>
+            </div>
+        </div>
+
+    </div>
+</div>
 
 <div class="container">
     <div class="row">
@@ -110,6 +146,8 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="js/landing.js"></script>
+<script src="js/bootstrap.min.js"></script>
+
 
 
 </body>
