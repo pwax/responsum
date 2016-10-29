@@ -1,12 +1,18 @@
 var boardId = getURLParameter("boardId")
+var boardName = getURLParameter("boardName")
 
 $(document).ready(function () {
 
+    //setup nav bar
+    $("#navBar").append("<li role='presentation' class='active'><a href=''>"+boardName+"</a></li>")
 
+    configureBoard(boardId)
 
 });
 
-function configureBoard(board) {
+function configureBoard(boardId) {
+
+    $("#boardName").append(boardName)
 
 }
 

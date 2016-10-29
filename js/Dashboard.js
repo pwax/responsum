@@ -9,6 +9,10 @@ $(document).ready(function () {
     $("#signInHeader").hide();
     $("#welcomeHeading").hide();
 
+    //show loading indicator
+    var target = document.getElementById("boardsLoadingIndicator")
+    var spinner = new Spinner(loadingIndicatorOpts).spin(target);
+
     var currentUser = Parse.User.current();
     if (currentUser){
         console.log("user is logged in");
@@ -50,12 +54,14 @@ $(document).ready(function () {
         $("#boardActionContainer").append(button);
 
         //query boards
-        queryBoardsForTeacher(user)
+        queryBoardsForUser(user)
     }
 
     function configForStudent(user) {
         var button='<button id="joinBoardButton" class="btn btn-primary"><span class="icon ion-plus"></span></button>';
         $("#boardActionContainer").append(button);
+        //query boards
+        queryBoardsForUser(user);
     }
     
     //creating a new board
@@ -80,7 +86,7 @@ $(document).ready(function () {
             newBoard.save(null, {
                 success: function(board) {
                     // Execute any logic that should take place after the object is saved.
-                    queryBoardsForTeacher(owner)
+                    queryBoardsForUser(owner)
                     $('#createBoardModal').modal('toggle');
                 },
                 error: function(newBoard, error) {
@@ -93,7 +99,7 @@ $(document).ready(function () {
 
     });
     
-    function queryBoardsForTeacher(user) {
+    function queryBoardsForUser(user) {
         console.log("querying for teacher...")
         var Boards = Parse.Object.extend("Board");
         var teacherBoardsQuery = new Parse.Query(Boards);
@@ -109,14 +115,25 @@ $(document).ready(function () {
                 //clear out if we have any
                 $("#fetchedBoardContainer").html("")
                 if (fetchedBoards.length <= 0){
-                    console.log("no boards for teacher")
+                    console.log("no boards")
+                    spinner.stop();
+
+                    var boardHelpString;
+                    if (user.get("isTeacher") == true){
+                        boardHelpString = "Get started by creating a board"
+                    }else{
+                        boardHelpString = "Get started by joining a board"
+                    }
+
+                    $("#fetchedBoardContainer").append("<div><h4><small>"+boardHelpString+"</h4></small></div>")
+
                 }else{
                     for (var i = 0; i < fetchedBoards.length; i++) {
                         var fetchedBoard = fetchedBoards[i];
                         console.log(fetchedBoard)
                         var boardName = fetchedBoard.get("name");
                         var boardId = fetchedBoard.id;
-                        $("#fetchedBoardContainer").append("<div class='panel'><h3>" + "<a href='board.html?boardId=" + boardId + "'>"+ boardName +" </a></h3></div>")
+                        $("#fetchedBoardContainer").append("<div class='panel'><h3>" + "<a href='board.html?boardId=" + boardId + "&boardName="+boardName+"'>"+ boardName +" </a></h3></div>")
                     }
                 }
             },
@@ -129,5 +146,27 @@ $(document).ready(function () {
 
 });
 
+var loadingIndicatorOpts = {
+    lines: 11 // The number of lines to draw
+    , length: 30 // The length of each line
+    , width: 7 // The line thickness
+    , radius: 28 // The radius of the inner circle
+    , scale: 0.25 // Scales overall size of the spinner
+    , corners: 1 // Corner roundness (0..1)
+    , color: '#000' // #rgb or #rrggbb or array of colors
+    , opacity: 0.05 // Opacity of the lines
+    , rotate: 12 // The rotation offset
+    , direction: 1 // 1: clockwise, -1: counterclockwise
+    , speed: 1.2 // Rounds per second
+    , trail: 72 // Afterglow percentage
+    , fps: 20 // Frames per second when using setTimeout() as a fallback for CSS
+    , zIndex: 2e9 // The z-index (defaults to 2000000000)
+    , className: 'spinner' // The CSS class to assign to the spinner
+    , top: '50%' // Top position relative to parent
+    , left: '50%' // Left position relative to parent
+    , shadow: false // Whether to render a shadow
+    , hwaccel: false // Whether to use hardware acceleration
+    , position: 'absolute' // Element positioning
+}
 
 

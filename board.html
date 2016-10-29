@@ -35,13 +35,31 @@
         <div class="container-fluid">
             <button type="button" id="signInNavButton" class="btn btn-default navbar-btn navbar-right" data-toggle="modal" data-target="#signInModal">Sign in</button>
             <button type="button" id="signOutNavButton" class="btn btn-default navbar-btn navbar-right" data-toggle="modal" data-target="#signOutModal">Sign Out</button>
-            <ul class="nav navbar-nav">
-                <li role="presentation" class="w"><a href="dashboard.html">Dashboard</a></li>
+            <ul id="navBar" class="nav navbar-nav">
+                <li role="presentation" class=""><a href="dashboard.html">Dashboard</a></li>
+                <li role="presentation" class="nav navbar-brand icon ion-ios-arrow-right text-center"><a href=""></a></li>
+
             </ul>
         </div>
     </div>
 </nav>
 
+<div class="container panel panel-default">
+
+        <!-- Posts -->
+        <div id="boardsContainer" class="panel-default">
+            <div class="row panel-heading">
+                <div id="boardsInfoContainer" class="col-md-3">
+                    <h2 id="boardName"></h2>
+                </div>
+                <div class="col-md-1 pull-right">
+                    <h2><div id="boardActionContainer"></div></h2>
+                </div>
+            </div>
+            <div id="fetchedBoardContainer"><div id="boardsLoadingIndicator"></div></div>
+        </div>
+
+</div>
 
 <!--Sign in-->
 <!-- Modal -->
@@ -120,7 +138,8 @@
 <script src="js/Dashboard.js"></script>
 <script src="js/SignIn.js"></script>
 <script src="js/SignOut.js"></script>
-
+<script src="js/Board.js"></script>
+<script src="js/spin.min.js"></script>
 
 </body>
 </html>

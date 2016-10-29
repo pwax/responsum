@@ -34,13 +34,15 @@
             </a>
         </div>
         <div class="container-fluid">
-            <button type="button" class="btn btn-default navbar-btn navbar-right" data-toggle="modal" data-target="#signInModal">Sign in</button>
+            <button type="button" id="signInNavButton" class="btn btn-default navbar-btn navbar-right" data-toggle="modal" data-target="#signInModal">Sign in</button>
+            <button type="button" id="signOutNavButton" class="btn btn-default navbar-btn navbar-right" data-toggle="modal" data-target="#signOutModal">Sign Out</button>
             <ul class="nav navbar-nav">
-                <li role="presentation"><a href="dashboard.html">Dashboard</a></li>
+                <li role="presentation" class=""><a href="dashboard.html">Dashboard</a></li>
             </ul>
         </div>
     </div>
 </nav>
+
 
 <!--landing-->
 <div class="bg"></div>
@@ -102,6 +104,24 @@
     </div>
 </div>
 
+<!-- Sign out -->
+<!-- Modal -->
+<div class="modal fade" id="signOutModal" tabindex="-1" role="dialog" aria-labelledby="signOutModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="signOutModalLabel">Are you sure you want to sign out?</h4>
+            </div>
+
+            <div class="modal-footer">
+                <button id="signOutButton" class="btn btn-default" type="button" type="button" data-dismiss="modal">Sign Out</button>
+                <button class="btn btn-primary" type="button" type="button" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
@@ -109,6 +129,7 @@
 <script src="js/landing.js"></script>
 <script src="js/bootstrap.min.js"></script>
 <script src="js/SignIn.js"></script>
+<script src="js/SignOut.js"></script>
 
 </body>
 </html>
