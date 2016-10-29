@@ -5,14 +5,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>Responsum - Home</title>
+    <title>Responsum - Board</title>
 
     <!-- Bootstrap -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/theme.css" rel="stylesheet">
     <link href="css/overrides.css" rel="stylesheet">
     <link rel="stylesheet" href=" http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -34,23 +33,15 @@
             </a>
         </div>
         <div class="container-fluid">
-            <button type="button" class="btn btn-default navbar-btn navbar-right" data-toggle="modal" data-target="#signInModal">Sign in</button>
+            <button type="button" id="signInNavButton" class="btn btn-default navbar-btn navbar-right" data-toggle="modal" data-target="#signInModal">Sign in</button>
+            <button type="button" id="signOutNavButton" class="btn btn-default navbar-btn navbar-right" data-toggle="modal" data-target="#signOutModal">Sign Out</button>
             <ul class="nav navbar-nav">
-                <li role="presentation"><a href="dashboard.html">Dashboard</a></li>
+                <li role="presentation" class="w"><a href="dashboard.html">Dashboard</a></li>
             </ul>
         </div>
     </div>
 </nav>
 
-<!--landing-->
-<div class="bg"></div>
-<div class="jumbotron">
-    <h1>Learning happens when</h1>
-    <h2>questions get answers</h2>
-    <p>
-        <button id="learnMoreButton" class="btn btn-primary btn-lg btn-space" >Learn More</button>
-    </p>
-</div>
 
 <!--Sign in-->
 <!-- Modal -->
@@ -95,6 +86,7 @@
                 </form>
             </div>
             <div class="modal-footer">
+
                 <a href="register.html" class="btn-link pull-left">Need an account?</a>
             </div>
         </div>
@@ -102,13 +94,33 @@
     </div>
 </div>
 
+<!-- Sign out -->
+<!-- Modal -->
+<div class="modal fade" id="signOutModal" tabindex="-1" role="dialog" aria-labelledby="signOutModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="signOutModalLabel">Are you sure you want to sign out?</h4>
+            </div>
+
+            <div class="modal-footer">
+                <button id="signOutButton" class="btn btn-default" type="button" type="button" data-dismiss="modal">Sign Out</button>
+                <button class="btn btn-primary" type="button" type="button" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="js/landing.js"></script>
 <script src="js/bootstrap.min.js"></script>
+<script src="js/Dashboard.js"></script>
 <script src="js/SignIn.js"></script>
+<script src="js/SignOut.js"></script>
+
 
 </body>
 </html>
