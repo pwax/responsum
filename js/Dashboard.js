@@ -59,11 +59,12 @@ $(document).ready(function () {
 
     function configForStudent(user) {
         var button='<button id="joinBoardButton" class="btn btn-primary" data-toggle="modal" data-target="#newPostModal"><span class="icon ion-plus"></span></button>';
+        var button='<button id="joinBoardButton" class="btn btn-primary" data-toggle="modal" data-target="#createSearchModal"><span class="icon ion-plus"></span></button>';
         $("#boardActionContainer").append(button);
         //query boards
         queryBoardsForUser(user);
     }
-    
+
     //creating a new board
     $("#finalCreateBoardButton").click(function () {
         console.log("creating new board...")
@@ -98,7 +99,7 @@ $(document).ready(function () {
         }
 
     });
-    
+
     function queryBoardsForUser(user) {
         console.log("querying for teacher...")
         var Boards = Parse.Object.extend("Board");
@@ -168,5 +169,3 @@ var loadingIndicatorOpts = {
     , hwaccel: false // Whether to use hardware acceleration
     , position: 'absolute' // Element positioning
 }
-
-
