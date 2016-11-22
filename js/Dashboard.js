@@ -58,7 +58,7 @@ $(document).ready(function () {
     }
 
     function configForStudent(user) {
-        var button='<button id="joinBoardButton" class="btn btn-primary"><span class="icon ion-plus"></span></button>';
+        var button='<button id="joinBoardButton" class="btn btn-primary" data-toggle="modal" data-target="#createSearchModal"><span class="icon ion-plus"></span></button>';
         $("#boardActionContainer").append(button);
         //query boards
         queryBoardsForUser(user);
