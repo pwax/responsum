@@ -63,7 +63,7 @@ $(document).ready(function () {
         //query boards
         queryBoardsForUser(user);
     }
-    
+
     //creating a new board
     $("#finalCreateBoardButton").click(function () {
         console.log("creating new board...")
@@ -98,7 +98,7 @@ $(document).ready(function () {
         }
 
     });
-    
+
     function queryBoardsForUser(user) {
         console.log("querying for teacher...")
         var Boards = Parse.Object.extend("Board");
@@ -168,5 +168,3 @@ var loadingIndicatorOpts = {
     , hwaccel: false // Whether to use hardware acceleration
     , position: 'absolute' // Element positioning
 }
-
-
