@@ -24,7 +24,7 @@ $(document).ready(function () {
 
     }else{
         console.log("no user");
-        $("#signInModal").modal('show')
+        $("#signInModal").modal('show');
         $("#signOutNavButton").hide();
         $("#signInNavButton").show();
         //update heading
@@ -101,6 +101,7 @@ $(document).ready(function () {
 
     });
 
+    //queries boards for user
     function queryBoardsForUser(user) {
         console.log("querying for teacher...")
         var Boards = Parse.Object.extend("Board");
@@ -135,7 +136,7 @@ $(document).ready(function () {
                         console.log(fetchedBoard)
                         var boardName = fetchedBoard.get("name");
                         var boardId = fetchedBoard.id;
-                        $("#fetchedBoardContainer").append("<div class='panel'><h3>" + "<a href='board.html?boardId=" + boardId + "&boardName="+boardName+"'>"+ boardName +" </a></h3></div>")
+                        $("#fetchedBoardContainer").append("<div class='panel'><h3><a href='board.html?boardId=" + boardId + "&boardName="+boardName+"'>"+ boardName +" </a></h3></div>")
                     }
                 }
             },
@@ -143,8 +144,104 @@ $(document).ready(function () {
                 alert("Error: " + error.code + " " + error.message);
             }
         })
-
     }
+
+    //search boards for student
+    $('#student-search-input').on('input',function(e){
+        var searchString = document.getElementById("searchInputText").value
+        console.log(searchString);
+        searchQueryBoardsForStudent(searchString)
+    });
+
+    //search boards for teacher
+    $('#teacherSearchInput').on('input',function(e){
+        var searchString = document.getElementById("teacherSearchInput").value
+        console.log(searchString);
+        searchQueryBoardsForTeacher(searchString)
+    });
+
+    //search for student
+    function searchQueryBoardsForStudent(input){
+        var input = input.replace(/\s/g, '');
+        if (input){
+            console.log("querying for search...");
+            var Boards = Parse.Object.extend("Board");
+            var boardSearchQuery = new Parse.Query(Boards);
+            boardSearchQuery.descending("createdAt");
+            boardSearchQuery.contains("name", input.toLowerCase());
+            boardSearchQuery.contains("name", input.toUpperCase());
+             boardSearchQuery.find({
+                success:function (fetchedBoards) {
+                    //got our boards for the teacher
+                    //clear out if we have any
+                    $("#studentSearchResultList").html("")
+                    if (fetchedBoards.length <= 0){
+                        console.log("no boards");
+                    }else{
+                        console.log("got some boards");
+                        for (var i = 0; i < fetchedBoards.length; i++) {
+                            var fetchedBoard = fetchedBoards[i];
+                            console.log(fetchedBoard)
+                            var boardName = fetchedBoard.get("name");
+                            console.log(boardName)
+                            var boardId = fetchedBoard.id;
+                            //board.html?boardId=" + boardId + "&boardName="+boardName
+                            var boardItemString = "<li class=list-group-item><a href='board.html?boardId=" + boardId + "&boardName="+boardName+"'>"+ boardName +" </a></li>"
+                            console.log(boardItemString);
+                            $("#studentSearchResultList").append(boardItemString)
+                        }
+                    }
+                },
+                error: function (error) {
+                    alert("Error: " + error.code + " " + error.message);
+                }
+            })
+        }else{
+            $("#studentSearchResultList").html("")
+        }
+    }
+
+    //search for teacher
+    function searchQueryBoardsForTeacher(input){
+        var input = input.replace(/\s/g, '');
+        if (input){
+            console.log("querying for search...");
+            var Boards = Parse.Object.extend("Board");
+            var boardSearchQuery = new Parse.Query(Boards);
+            boardSearchQuery.descending("createdAt");
+            boardSearchQuery.contains("name", input.toLowerCase());
+            boardSearchQuery.contains("name", input.toUpperCase());
+             boardSearchQuery.find({
+                success:function (fetchedBoards) {
+                    //got our boards for the teacher
+                    //clear out if we have any
+                    $("#teacherSearchResultList").html("")
+                    if (fetchedBoards.length <= 0){
+                        console.log("no boards");
+                    }else{
+                        console.log("got some boards");
+                        for (var i = 0; i < fetchedBoards.length; i++) {
+                            var fetchedBoard = fetchedBoards[i];
+                            console.log(fetchedBoard)
+                            var boardName = fetchedBoard.get("name");
+                            console.log(boardName)
+                            var boardId = fetchedBoard.id;
+                            //board.html?boardId=" + boardId + "&boardName="+boardName
+                            var boardItemString = "<li class=list-group-item><a href='board.html?boardId=" + boardId + "&boardName="+boardName+"'>"+ boardName +" </a></li>"
+                            console.log(boardItemString);
+                            $("#teacherSearchResultList").append(boardItemString)
+                        }
+                    }
+                },
+                error: function (error) {
+                    alert("Error: " + error.code + " " + error.message);
+                }
+            })
+        }else{
+            $("#teacherSearchResultList").html("")
+        }
+    }
+
 
 });
 
