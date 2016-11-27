@@ -58,7 +58,7 @@ $(document).ready(function () {
     }
 
     function configForStudent(user) {
-        var button='<button id="joinBoardButton" class="btn btn-primary" data-toggle="modal" data-target="#createSearchModal"><span class="icon ion-plus"></span></button>';
+        var button='<button id="joinBoardButton" class="btn btn-primary " data-toggle="modal" data-target="#createSearchModal"><span class="icon ion-plus"></span></button>';
 
         // var button='<button id="joinBoardButton" class="btn btn-primary" data-toggle="modal" data-target="#newPostModal"><span class="icon ion-plus"></span></button>';
         $("#boardActionContainer").append(button);
@@ -88,6 +88,15 @@ $(document).ready(function () {
             newBoard.save(null, {
                 success: function(board) {
                     // Execute any logic that should take place after the object is saved.
+
+                    //make the teacher a board member
+                    var member = Parse.User.current();
+                    var BoardMember = Parse.Object.extend("BoardMember");
+                    var newBoardMember = new BoardMember();
+                    newBoardMember.set("member", member);
+                    newBoardMember.set("board", board);
+                    newBoardMember.save();
+
                     queryBoardsForUser(owner)
                     $('#createBoardModal').modal('toggle');
                 },
@@ -98,12 +107,11 @@ $(document).ready(function () {
                 }
             });
         }
-
     });
 
     //queries boards for user
     function queryBoardsForUser(user) {
-        console.log("querying for teacher...")
+        console.log("querying for user...")
         var Boards = Parse.Object.extend("Board");
         var teacherBoardsQuery = new Parse.Query(Boards);
         teacherBoardsQuery.descending("createdAt");
