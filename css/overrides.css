@@ -26,3 +26,12 @@
 .btn-default,.btn-primary,.btn-success,.btn-info,.btn-warning,.btn-danger {
     border-radius:23px;
 }
+
+.btn:focus,.btn:active:focus,.btn.active:focus,
+.btn.focus,.btn:active.focus,.btn.active.focus {
+    outline: none;
+}
+
+.name{
+    color: #F66C1D;
+}

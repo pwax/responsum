@@ -58,7 +58,7 @@ $(document).ready(function () {
     }
 
     function configForStudent(user) {
-        var button='<button id="joinBoardButton" class="btn btn-primary" data-toggle="modal" data-target="#createSearchModal"><span class="icon ion-plus"></span></button>';
+        var button='<button id="joinBoardButton" class="btn btn-primary " data-toggle="modal" data-target="#createSearchModal"><span class="icon ion-plus"></span></button>';
 
         // var button='<button id="joinBoardButton" class="btn btn-primary" data-toggle="modal" data-target="#newPostModal"><span class="icon ion-plus"></span></button>';
         $("#boardActionContainer").append(button);
@@ -81,13 +81,26 @@ $(document).ready(function () {
         newBoard.set("owner", owner);
         newBoard.set("name", name);
         newBoard.set("passcode", passcode);
+        newBoard.set("ownerName", owner.get("name"));
 
-        if (!name|| !passcode){
+        if (!name || !passcode){
             alert("Please be sure to enter a name and passcode")
         }else{
             newBoard.save(null, {
                 success: function(board) {
                     // Execute any logic that should take place after the object is saved.
+
+                    //make the teacher a board member
+                    var member = Parse.User.current();
+                    var BoardMember = Parse.Object.extend("BoardMember");
+                    var newBoardMember = new BoardMember();
+                    newBoardMember.set("member", member);
+                    newBoardMember.set("board", board);
+                    newBoardMember.set("boardName", board.get("name"))
+                    newBoardMember.set("boardId", board.id)
+                    newBoardMember.set("ownerName", Parse.User.current().get("name"))
+                    newBoardMember.save();
+
                     queryBoardsForUser(owner)
                     $('#createBoardModal').modal('toggle');
                 },
@@ -98,52 +111,48 @@ $(document).ready(function () {
                 }
             });
         }
-
     });
 
     //queries boards for user
     function queryBoardsForUser(user) {
-        console.log("querying for teacher...")
-        var Boards = Parse.Object.extend("Board");
-        var teacherBoardsQuery = new Parse.Query(Boards);
-        teacherBoardsQuery.descending("createdAt");
-        teacherBoardsQuery.equalTo("owner", {
-            __type: "Pointer",
-            className: "_User",
-            objectId: user.id
-        });
-        teacherBoardsQuery.find({
-            success:function (fetchedBoards) {
-                //got our boards for the teacher
-                //clear out if we have any
-                $("#fetchedBoardContainer").html("")
-                if (fetchedBoards.length <= 0){
-                    console.log("no boards")
-                    spinner.stop();
 
-                    var boardHelpString;
-                    if (user.get("isTeacher") == true){
-                        boardHelpString = "Get started by creating a board"
-                    }else{
-                        boardHelpString = "Get started by joining a board"
-                    }
+        //query board members
+        var BoardMember = Parse.Object.extend("BoardMember")
+        var boardMemberQuery = new Parse.Query(BoardMember)
+        boardMemberQuery.equalTo("member", user)
+        boardMemberQuery.descending("createdAt")
+        boardMemberQuery.find({
+            success:function(memberOfBoards){
+              $("#fetchedBoardContainer").html("")
+              if (memberOfBoards.length <= 0){
+                  console.log("no boards")
+                  spinner.stop();
+                  var boardHelpString;
+                  if (user.get("isTeacher") == true){
+                      boardHelpString = "Get started by creating a board"
+                  }else{
+                      boardHelpString = "Get started by joining a board"
+                  }
 
-                    $("#fetchedBoardContainer").append("<div><h4><small>"+boardHelpString+"</h4></small></div>")
+                  $("#fetchedBoardContainer").append("<div><h4><small>"+boardHelpString+"</h4></small></div>")
 
-                }else{
-                    for (var i = 0; i < fetchedBoards.length; i++) {
-                        var fetchedBoard = fetchedBoards[i];
-                        console.log(fetchedBoard)
-                        var boardName = fetchedBoard.get("name");
-                        var boardId = fetchedBoard.id;
-                        $("#fetchedBoardContainer").append("<div class='panel'><h3><a href='board.html?boardId=" + boardId + "&boardName="+boardName+"'>"+ boardName +" </a></h3></div>")
-                    }
+              }else{
+                for (var i = 0; i < memberOfBoards.length; i++) {
+
+                    var memberOfBoard = memberOfBoards[i]
+                    var boardName = memberOfBoard.get("boardName")
+                    var ownerName = memberOfBoard.get("ownerName")
+                    var boardId = memberOfBoard.get("boardId")
+                    var createdAtDate = new Date(memberOfBoard.get("createdAt")).toDateString();
+                    $("#fetchedBoardContainer").append("<div class='panel'><h3><a href='board.html?boardId=" + boardId + "&boardName="+boardName+"'>"+ boardName +" </a></h3><h4><small class='name'>"+ownerName+"</small></h4><h4><small>"+createdAtDate+"</small></h4></div>")
                 }
+              }
             },
-            error: function (error) {
-                alert("Error: " + error.code + " " + error.message);
+            error:function(error){
+                console.log(JSON.stringify(error))
             }
         })
+
     }
 
     //search boards for student

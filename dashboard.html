@@ -50,34 +50,19 @@
 </div>
 
 <div class="container">
-    <div class="row">
+
         <!-- Boards -->
-        <div id="boardsContainer" class="panel panel-default col-md-4">
+        <div id="boardsContainer" class="panel panel-default col-md-12">
             <div class="row panel-heading">
                 <div id="boardsInfoContainer" class="col-sm-1">
                     <h2>Boards</h2>
                 </div>
-                <div class="col-md-2 pull-right">
+                <div class="col-md-1 pull-right">
                     <h2><div id="boardActionContainer"></div></h2>
                 </div>
             </div>
             <div id="fetchedBoardContainer"><div id="boardsLoadingIndicator"></div></div>
         </div>
-
-        <div class="col-md-1">
-            <!--empty space-->
-        </div>
-
-        <!-- Recent Posts -->
-        <div id="recentPostsContainer" class="panel panel-default col-md-4">
-            <div class="row panel-heading">
-                <div id="recentPostsInfoContainer">
-                    <legend><h3>Recent Posts</h3></legend>
-                </div>
-            </div>
-
-        </div>
-    </div>
 </div>
 
 
@@ -115,22 +100,6 @@
 </div>
 
 
-
-<!--Create board sign in with passcode modal-->
-<div id = "createJoinBoard" class = "modal fade" role = "dialog">
-    <div class = "modal-dialog">
-        <!-- Modal content-->
-        <div class = "modal-content">
-            <div class = "modal-header">
-                <button type = "button" class = "close" data-dissmiss = "modal" aria-label = "Close">
-                    <span aria-hidden = "true">&times;</span>
-                </button>
-                <h3 class = "modal-title">Board Name</h3>
-            </div>
-        </div>
-    </div>
-</div>
-
 <!--Create board modal (for teachers)-->
 <div id="createBoardModal" class="modal fade" role="dialog">
     <div class="modal-dialog">
@@ -138,28 +107,6 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button> <!--BUTTON TO CREATE/SEARCH BOARD-->
-                <!--pop up modal for search for a board (for students)-->
-                <!--<div class="row">-->
-                    <!--<div style="padding-left: 16px; padding-right: 16px ">-->
-                        <!--<h2>Search for a board</h2>-->
-                        <!--<div id="teacher-search-input">-->
-                            <!--<div class="input-group col-md-12">-->
-                                <!--<input id="teacherSearchInput" type="text" class="form-control input-md" placeholder="board name" />-->
-                                <!--<span class="input-group-btn">-->
-                                <!--<button class="btn btn-info btn-md" type="button">-->
-                                    <!--<span class="icon ion-search"></span>-->
-                                 <!--</button>-->
-                            <!--</span>-->
-                            <!--</div>-->
-                            <!--<div>-->
-                                <!--<ul id="teacherSearchResultList" class="list-group" style="padding-right: 36px">-->
-                                    <!--&lt;!&ndash;searh results here&ndash;&gt;-->
-                                <!--</ul>-->
-                            <!--</div>-->
-                        <!--</div>-->
-                    <!--</div>-->
-                <!--</div>-->
-
                 <h4 class="modal-title">Create New Board</h4>
             </div>
             <div class="modal-body">

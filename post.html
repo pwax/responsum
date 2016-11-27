@@ -37,91 +37,58 @@
         <div class="container-fluid">
             <button type="button" id="signInNavButton" class="btn btn-default navbar-btn navbar-right" data-toggle="modal" data-target="#signInModal">Sign in</button>
             <button type="button" id="signOutNavButton" class="btn btn-default navbar-btn navbar-right" data-toggle="modal" data-target="#signOutModal">Sign Out</button>
-            <ul class="nav navbar-nav">
-                <li role="presentation" class="active"><a href="dashboard.html">Dashboard</a></li>
+            <ul id="navBar" class="nav navbar-nav">
+                <li role="presentation" class=""><a href="dashboard.html">Dashboard</a></li>
+                <li role="presentation" class="nav navbar-brand icon ion-ios-arrow-right text-center"><a href=""></a></li>
+
             </ul>
         </div>
     </div>
 </nav>
 
 <div class="container panel panel-default">
-
     <!-- Posts container-->
     <div id="postsContainer" class="panel-default">
         <div class="row panel-heading">
-            <div id="postsInfoContainer" class="col-md-3">
-                <h2 id="postsName">Post Title</h2>
-
+            <div id="postsInfoContainer" class="col-lg-8">
+                <h2 id="postTitle"></h2>
             </div>
-
         </div>
-
-
-        <div class="panel-body" id="postBody">
-
-                <p class="lead"> Post Body </p>
-
+        <div class="panel-body" >
+            <p class="lead" id="postBody"></p>
             <div class="panel panel-default" style="padding-left: 16px; padding-top: 16px" >
-            <form class="form-horizontal">
-                <fieldset>
-                    <div class = "container">
-
-                        <!-- Textarea -->
-                     <div class="form-group">
-                        <label class="col-md-4 control-label" for="textarea"></label>
-
-                            <textarea class="form-control" style="max-width: 75%" id="textarea" name="textarea">Post reply...</textarea>
-
-                        </div>
-
-                        <!-- Button -->
-                        <div class="form-group">
-
-                        <label class="col-md-4 pull-right control-label" for="singlebutton"></label>
-                            <button id="singlebutton" name="singlebutton"  class="btn btn-primary">Post</button>
-                     </div>
-                    </div>
-
-                </fieldset>
-            </form>
-                </div>
-
-            <div class="panel panel-default" >
-
-                <!-- Posts container-->
-                <div id="postsContainer" class="panel-default">
-                    <div class="panel-heading">
-                    <div class="row panel-heading">
-
-                        <div id="postsInfoContainer" class="col-md-10">
-                            <h4 id="postsName">Postee Name</h4>
-                        </div>
-
-                        <div id="postDateContainer" class = "col-xs-2" >
-                            <h4 id="postDate">Post Date</h4>
-                        </div>
-                        </div>
-
-
-                    </div>
-
-                    <div class="panel-body">
+                <form class="form-horizontal">
+                    <fieldset>
                         <div class = "container">
-                            <div class = "container" id="postComment">
-                            <h4> Postee comment</h4>
-                        </div>
+                            <!-- Textarea -->
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="commentBody"></label>
+                                <textarea class="form-control" style="max-width: 75%" id="commentBody" placeholder="" name="textarea"></textarea>
                             </div>
-
-                    </div>
-                </div>
-
+                            <!-- Button -->
+                            <div class="form-group">
+                                <label class="col-md-4 pull-right control-label" for="postCommentButton"></label>
+                                <button id="postCommentButton" name="singlebutton" class="btn btn-primary" type="button">Post Reply</button>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
             </div>
-
-
+            <div class="panel panel-default" id="commentContainer">
+            </div>
         </div>
     </div>
-
 </div>
+
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="js/landing.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/SignIn.js"></script>
+<script src="js/SignOut.js"></script>
+<script src="js/Post.js"></script>
+<script src="js/spin.min.js"></script>
 
 
 
