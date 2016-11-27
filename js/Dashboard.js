@@ -81,6 +81,7 @@ $(document).ready(function () {
         newBoard.set("owner", owner);
         newBoard.set("name", name);
         newBoard.set("passcode", passcode);
+        newBoard.set("ownerName", owner.get("name"));
 
         if (!name|| !passcode){
             alert("Please be sure to enter a name and passcode")
@@ -144,7 +145,9 @@ $(document).ready(function () {
                         console.log(fetchedBoard)
                         var boardName = fetchedBoard.get("name");
                         var boardId = fetchedBoard.id;
-                        $("#fetchedBoardContainer").append("<div class='panel'><h3><a href='board.html?boardId=" + boardId + "&boardName="+boardName+"'>"+ boardName +" </a></h3></div>")
+                        var ownerName = fetchedBoard.get("ownerName");
+                        var createdAtDate = new Date(fetchedBoard.get("createdAt")).toDateString();
+                        $("#fetchedBoardContainer").append("<div class='panel'><h3><a href='board.html?boardId=" + boardId + "&boardName="+boardName+"'>"+ boardName +" </a></h3><h4><small class='name'>"+ownerName+"</small></h4><h4><small>"+createdAtDate+"</small></h4></div>")
                     }
                 }
             },

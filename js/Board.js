@@ -3,6 +3,9 @@ var boardName = getURLParameter("boardName")
 
 $(document).ready(function () {
 
+    Parse.initialize("8f5d3fea-573c-4a82-8f9e-5e2873cc6d52");
+    Parse.serverURL = 'http://responsum.herokuapp.com/parse';
+
     //setup nav bar
     $("#navBar").append("<li role='presentation' class='active'><a href=''>"+boardName+"</a></li>")
     configureBoard(boardId, Parse.User.current())
@@ -15,6 +18,16 @@ $(document).ready(function () {
          var passcodeString = document.getElementById("boardPasscodeInput").value
         if (passcodeString){
             console.log(passcodeString);
+
+            //query board for matching id and passcode
+            var Board = Parse.Object.extend("Board")
+            var currentBoard = new Board()
+            currentBoard.id = boardId
+
+            var boardQuery = new Parse.Query(Board)
+            boardQuery.equalTo("board", currentBoard)
+            boardQuery.equalTo("passcode", passcodeString)
+
 
         }else{
             console.log("no passcode");
@@ -94,9 +107,7 @@ function configureBoard(boardId, user) {
             console.log("error finding board member: "+ JSON.stringify(error));
         }
     })
-
     $("#boardName").append(boardName)
-
 }
 
 function queryPostsForBoard(board){
@@ -119,7 +130,7 @@ function queryPostsForBoard(board){
                     var postId = fetchedPost.id;
                     var ownerName = fetchedPost.get("ownerName");
                     var createdAtDate = new Date(fetchedPost.get("createdAt")).toDateString();
-                    $("#fetchedPostContainer").append("<div class='panel'><h3><a href='board.html?boardId=" + postId + "&boardName="+postName+"'>"+ postName +" </a><h4><small class='name'>"+ownerName+"</small></h4><h4><small>"+createdAtDate+"</small></h4></div>")
+                    $("#fetchedPostContainer").append("<div class='panel'><h3><a href='post.html?postId=" + postId + "&postName="+postName+"&boardName="+boardName+"&boardId="+boardId+"'>"+ postName +" </a><h4><small class='name'>"+ownerName+"</small></h4><h4><small>"+createdAtDate+"</small></h4></div>")
                  }
             }else{
                 $("#fetchedPostContainer").html("<div><h4><small>Get started by creating a post</h4></small></div>")
