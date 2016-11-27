@@ -15,6 +15,44 @@ $(document).ready(function () {
     //configure post
     configurePost(postId);
 
+    //get comments
+    var Post = Parse.Object.extend("Post")
+    var currentPost = new Post();
+    currentPost.id = postId
+    queryComments(currentPost);
+
+    //post comment
+    $("#postCommentButton").click(function(){
+        console.log("post comment button pressed ")
+        var bodyString = document.getElementById("commentBody").value
+        if (bodyString){
+            $('#commentBody').val('');
+            var Post = Parse.Object.extend("Post")
+            var currentPost = new Post();
+            currentPost.id = postId
+
+            var Comment = Parse.Object.extend("Comment")
+            var newComment = new Comment();
+            newComment.set("body", bodyString)
+            newComment.set("post", currentPost)
+            newComment.set("owner", Parse.User.current())
+            newComment.set("ownerName", Parse.User.current().get("name"))
+            newComment.save(null, {
+                success: function(post) {
+                    console.log("saved post")
+                    queryComments(post)
+                },
+                error: function(newBoard, error) {
+                    // Execute any logic that should take place if the save fails.
+                    // error is a Parse.Error with an error code and message.
+                    alert('Failed to create new comment ' + error.message);
+                }
+            });
+        }
+
+    })
+
+
 })
 
 //for configuring our post
@@ -34,6 +72,47 @@ function configurePost(postId){
     })
 
 }
+
+function queryComments(post){
+
+    //query our comments
+    var Comment = Parse.Object.extend("Comment")
+    var commentQuery = new Parse.Query(Comment)
+
+    commentQuery.equalTo("post", post)
+    commentQuery.descending("createdAt")
+    commentQuery.find({
+        success:function(fetchedComments){
+            for (var i = 0; i < fetchedComments.length; i++) {
+                var fetchedComment = fetchedComments[i]
+                var name = fetchedComment.get("ownerName")
+                var createdAtDate = new Date(fetchedComment.get("createdAt")).toDateString();
+                var body = fetchedComment.get("body")
+                configureComment(name, createdAtDate, body)
+            }
+        },
+        error:function(error){
+            console.log("error getting comments "+ JSON.stringify(error));
+        }
+    })
+
+}
+
+function configureComment(ownerName, date, body){
+
+    var openingTags = "<div class='panel-default'><div class='panel-heading'><div class='row panel-heading'>"
+    var nameTags = "<div id='posteeInfoContainer' class='col-md-10'><h4 id='posteeName' class='name'>"+ownerName+"</h4></div>"
+    var dateTags = "<div id='postDateContainer' class = 'col-xs-2'><h4 id='postDate'><small>"+date+"</small></h4></div></div></div>"
+    var bodyTags = "<div class='panel-body'><div class = 'container'><div class = 'container' id='postComment'><h4>"+body+"</h4></div></div></div>"
+    var closingTags = "</div></div></div>"
+
+    var comment = openingTags+nameTags+dateTags+bodyTags+closingTags
+
+    $("#commentContainer").append(comment);
+
+}
+
+
 
 //for parsing whatever parameters we have in the url
 function getURLParameter(name) {
