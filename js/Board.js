@@ -15,20 +15,42 @@ $(document).ready(function () {
 
     $("#joinBoardButton").click(function(){
         console.log("join board")
-         var passcodeString = document.getElementById("boardPasscodeInput").value
+        var passcodeString = document.getElementById("boardPasscodeInput").value
         if (passcodeString){
             console.log(passcodeString);
-
             //query board for matching id and passcode
             var Board = Parse.Object.extend("Board")
-            var currentBoard = new Board()
-            currentBoard.id = boardId
-
             var boardQuery = new Parse.Query(Board)
-            boardQuery.equalTo("board", currentBoard)
-            boardQuery.equalTo("passcode", passcodeString)
+            boardQuery.get(boardId,{
+                success:function(board){
+                    if (passcodeString == board.get("passcode")){
+                        console.log("matching code")
+                        //join the board
+                        var member = Parse.User.current();
+                        var BoardMember = Parse.Object.extend("BoardMember");
+                        var newBoardMember = new BoardMember();
+                        newBoardMember.set("member", member);
+                        newBoardMember.set("board", board);
+                        newBoardMember.set("ownerName", board.get("ownerName"))
+                        newBoardMember.set("boardId", board.id)
+                        newBoardMember.set("boardName", board.get("name"))
+                        newBoardMember.save()
+                        $('#createJoinBoard').modal('toggle');
+                        var button='<button id="joinBoardButton" class="btn btn-primary " data-toggle="modal" data-target="#newPostModal"><span class="icon ion-plus"></span></button>';
+                        $("#postActionContainer").append(button);
+                        $("#fetchedPostContainer").append("<div><h4><small>Loading posts...</h4></small></div>")
+                        queryPostsForBoard(board);
+                    }else{
+                        console.log("doesnt match")
+                        $("#joinBoardErrorText").html("Incorrect passcode")
 
-
+                    }
+                },
+                error:function(error){
+                    console.log(JSON.stringify(error))
+                    $("#joinBoardErrorText").html(JSON.stringify(error))
+                }
+            })
         }else{
             console.log("no passcode");
             //show error
@@ -76,6 +98,7 @@ $(document).ready(function () {
 function promptForPassword(){
     $("#joinBoardModalTitle").append("Join " + boardName);
     $("#createJoinBoard").modal('show');
+
 }
 
 function configureBoard(boardId, user) {
@@ -96,10 +119,13 @@ function configureBoard(boardId, user) {
                 var button='<button id="joinBoardButton" class="btn btn-primary " data-toggle="modal" data-target="#newPostModal"><span class="icon ion-plus"></span></button>';
                 $("#postActionContainer").append(button);
                 $("#fetchedPostContainer").append("<div><h4><small>Loading posts...</h4></small></div>")
+                var Board = Parse.Object.extend("Board")
+                var currentBoard = new Board();
+                currentBoard.id = boardId
                 queryPostsForBoard(currentBoard);
             }else{
                 //we're not a member, prompt for password
-                $("#fetchedPostContainer").append("<div><h4><small>Please sign in the view posts</h4></small></div>")
+                $("#fetchedPostContainer").append("<div><h4><small>Please join the board to view posts</h4></small></div>")
                 promptForPassword()
             }
         },

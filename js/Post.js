@@ -40,7 +40,10 @@ $(document).ready(function () {
             newComment.save(null, {
                 success: function(post) {
                     console.log("saved post")
-                    queryComments(post)
+                    var Post = Parse.Object.extend("Post")
+                    var currentPost = new Post();
+                    currentPost.id = postId
+                    queryComments(currentPost);
                 },
                 error: function(newBoard, error) {
                     // Execute any logic that should take place if the save fails.
@@ -81,6 +84,7 @@ function queryComments(post){
 
     commentQuery.equalTo("post", post)
     commentQuery.descending("createdAt")
+    $("#commentContainer").html("");
     commentQuery.find({
         success:function(fetchedComments){
             for (var i = 0; i < fetchedComments.length; i++) {
